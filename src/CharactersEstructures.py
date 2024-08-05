@@ -1,8 +1,17 @@
 from random import randint
 
+
+#Se define el nombre de la clase
 class CharactersEstructures:
     _panelPersonajes = []
 
+    ########################################
+    #
+    # FUNCION __INIT
+    # Sirve para poder inicializar la clase, es indispensable al crear una clase. 
+    # Recibe como parámetro a sí misma (self). Está generando unos parámetros concretos
+    # a los que le podemos añadir más, se crea el esqueleto del objeto a tratar (en este caso)
+    # de los caracteres. Cada parámetro se inicializa con algún valor o vacío. 
     def __init__(self):
         self.id = self._generateId()
         self.name = ""
@@ -12,8 +21,12 @@ class CharactersEstructures:
         self.skin_color = ""
         self.birth_year = ""
         self.gender = "male"
-        CharactersEstructures._panelPersonajes.append(self)
+        CharactersEstructures._panelPersonajes.append(self) #se usa para poder añadir algunos ejemplos preestablecidos. 
 
+
+    # FUNCION SERIALIZE:
+    # Se recibe también a sí misma como parámetro. 
+    # Permite devolver un objeto con un formato concreto (en este caso Json)
     def serialize(self):
         return {
             "id": self.id,
@@ -26,18 +39,25 @@ class CharactersEstructures:
             "gender": self.gender
         }
 
-# mostrarPersonajes, mostrarPersonaje 
 
- 
+
+    #Genera un id aleatorio, que será un número entero en 0 y 99999999
     def _generateId(self):
         return randint(0, 99999999)
+    
 
-    #DEvuelve la lista con los personajes que se han guardado en la lista vacia 
+    #DeEvuelve la lista con todos los personajes que se han guardado en la lista vacia creada arriba.
+    # REturn: se hace un for que recorre la lista de personajes ("in CharactersEstructures._panelPersonajes")
+    # en el for se genera una variable que es personaje, que será cada uno de los personajes que encuentre en la lista. 
+    # en ese momento al personaje se le hace serialize para que nos lo devuelva en el formato que queremos (Json)
     def mostrarPersonajes():        
         return [personaje.serialize() for personaje in CharactersEstructures._panelPersonajes]
     
 
-    
+    #Recibe el id del persona que vayamos a mostrar. 
+    #Recorre con un for la lista de personajes que se han ido añadiendo a _panelPersonajes
+    # Si el personaje.id coincide con el que queremos mostrar, nos devuelve el personaje serializado con un formato concreto.
+    # Si no, nos da un error. 
     def mostrarPersonaje(id):
         for personaje in CharactersEstructures._panelPersonajes:
             if personaje.id == id:

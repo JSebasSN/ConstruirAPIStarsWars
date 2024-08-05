@@ -23,40 +23,59 @@ class FavouritesEstructures:
             "users_id": self.users_id
         }
     
+    #Función que devuelve toda la lisata de favoritos. 
     def favoritosUsuario():
         return [favorito.serialize() for favorito in FavouritesEstructures._contenidoFavoritos]
+    
+    
+    # REcoge el id del personaje y el id del usuario (con el que se ha iniciado la sesión).
+    # Recorre con un for la lista de personajes, creando "personaje como variable."
+    # Si personaje.id (de los que está en la lista) coincide con el id del personaje que buscamos entonces
+    # genera una instancia (esqueleto) auxilizar de favoritos y lo pasa a la variable "nuevo_favorito"
+    # nuevo_favorito.characters_id = id: coge el id del personaje que queremos añadir y se lo asigna al atributo characters_id
+    # propio de la estructura nuevo_favorito, los copia a la clase FavouritesEstructures.
+    # Hace la misma operación con el id del usuario
+    # Retorna la lista de favoritos que se ha creado en la clase. 
+    def mostrarPersonajeFav (id, users_id):
+        for personaje in CharactersEstructures._panelPersonajes:
+            if personaje.id == id:
+                nuevo_favorito = FavouritesEstructures()
+                nuevo_favorito.characters_id = id
+                nuevo_favorito.users_id = users_id
+                return FavouritesEstructures.favoritosUsuario()
+    
+
+    def mostrarPlanetaFav (id, users_id):
+        for planeta in PlanetsEstructures._panelPlanetas:
+            if planeta.id == id:
+                nuevo_favorito = FavouritesEstructures()
+                nuevo_favorito.planets_id = id
+                nuevo_favorito.users_id = users_id
+                return FavouritesEstructures.favoritosUsuario()    
+
+    def eliminarPersonajeFav(id):
+        personajeAEliminar = None
+        for personaje in FavouritesEstructures._contenidoFavoritos:
+            if personaje.characters_id == id:
+                personajeAEliminar = personaje
+                break
+        if personajeAEliminar:
+            FavouritesEstructures._contenidoFavoritos.remove(personajeAEliminar)
+        return FavouritesEstructures.favoritosUsuario()   
 
 
-tatooine = PlanetsEstructures()
-tatooine.name = "Tatooine"
-tatooine.diameter = 10465
-tatooine.rotation_period = 23
-tatooine.orbital_period = 304
-tatooine.gravity = "1 standard"
-tatooine.population = 200
-tatooine.climate = "arid"
-tatooine.terrain = "desert"
 
-char1 = CharactersEstructures()
-char1.name = "Luke Skywalker"
-char1.height = 172
-char1.mass = 77
-char1.hair_color = "Blond"
-char1.skin_color = "Fair"
-char1.birth_year = "19BBY"
-char1.gender = "male"
+    def eliminarPlanetaFav(id):
+        planetaAEliminar = None
+        for planeta in FavouritesEstructures._contenidoFavoritos:
+            if planeta.planets_id == id:
+                planetaAEliminar = planeta
+                break
+        if planetaAEliminar:
+            FavouritesEstructures._contenidoFavoritos.remove(planetaAEliminar)
+        return FavouritesEstructures.favoritosUsuario() 
 
-# Crear favoritos predefinidos
-fav1 = FavouritesEstructures()
-fav1.starships_id = None
-fav1.planets_id = tatooine.id
-fav1.characters_id = char1.id
-fav1.users_id = 1  # Asumiendo que ya has creado un usuario con id = 1
 
-fav_for_char1 = FavouritesEstructures()
-fav_for_char1.id = 1  # Asignar un ID al favorito si es necesario (opcional)
-fav_for_char1.starships_id = None
-fav_for_char1.planets_id = None
-fav_for_char1.characters_id = char1.id
-fav_for_char1.users_id = 1  # Suponiendo que el usuario con id 1 ya existe
+
+
 
