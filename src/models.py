@@ -26,9 +26,6 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
     
-
-   
-
     
 #Tabla de personajes
 #En la columna gender le aporto un dato tipo Enum:
